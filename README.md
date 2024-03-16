@@ -1,2 +1,0 @@
-# ColumnCalculatorProject
- Column Calculator Project
