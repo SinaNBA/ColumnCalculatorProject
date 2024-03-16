@@ -6,13 +6,9 @@ public class Program
     {
         Console.WriteLine("Enter your file path:");
         bool validInput=false;
-        string[]? tempArrayToKeepinputs;
-        List<int>? resultValues=new List<int>();
 
         while (!validInput)
         {
-            //D:\Projects\Peter's homeworks\8\Input1.csv
-
             string? filePath = Console.ReadLine();
 
             if (filePath == null || !File.Exists(filePath))
@@ -26,17 +22,10 @@ public class Program
                 while ((line = reader.ReadLine()) != null)
                 {
                     Console.WriteLine(line);
-                    tempArrayToKeepinputs = line.Split(',');
-                    resultValues.Add(tempArrayToKeepinputs.Sum(int.Parse));                   
-                    
                 }
 
                 validInput= true;
             }
-        }
-        foreach(var element in resultValues)
-        {
-            Console.WriteLine(element);
         }
     }
 }
