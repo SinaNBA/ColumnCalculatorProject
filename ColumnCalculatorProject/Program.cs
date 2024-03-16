@@ -4,37 +4,52 @@ public class Program
 {
     static void Main(string[] args)
     {
-        Console.WriteLine("Enter your file path:");
-        bool validInput=false;
-        string[]? tempArrayToKeepinputs;
-        List<int>? resultValues=new List<int>();
+        Console.WriteLine("Please enter the file path and the desired operator, separated by a space. The format should be 'FileName Operator(+ - * / r (meaning round) and e (meaning exponent))'.");
+        bool validInput = false;
+        List<int> tempArrayToKeepinputs;
+        List<List<int>>? numberPairsList = new List<List<int>>();
 
         while (!validInput)
         {
             //D:\Projects\Peter's homeworks\8\Input1.csv
 
-            string? filePath = Console.ReadLine();
+            string? filePathAndOperator;
+            filePathAndOperator = Console.ReadLine();
+            string filePath;
+            string operatorInput;
 
-            if (filePath == null || !File.Exists(filePath))
+            if (!string.IsNullOrEmpty(filePathAndOperator))
             {
-                Console.WriteLine("The file path is empty or does not exist.");
+                operatorInput = filePathAndOperator.Substring(filePathAndOperator.Length-1,1);
+                filePath=filePathAndOperator.Substring(0,filePathAndOperator.Length-1);
+
+                if (!File.Exists(filePath))
+                {
+                    Console.WriteLine("The file path does not exist.");
+                }
+                else
+                {
+                    var reader = new StreamReader(filePath);
+                    string? line;
+                    while ((line = reader.ReadLine()) != null)
+                    {
+                        Console.WriteLine(line);
+                        tempArrayToKeepinputs = line.Split(',').Select(int.Parse).ToList();
+                        numberPairsList.Add(new List<int>(tempArrayToKeepinputs));
+
+                    }
+
+                    validInput = true;
+                }
             }
             else
             {
-                var reader = new StreamReader(filePath);
-                string? line;
-                while ((line = reader.ReadLine()) != null)
-                {
-                    Console.WriteLine(line);
-                    tempArrayToKeepinputs = line.Split(',');
-                    resultValues.Add(tempArrayToKeepinputs.Sum(int.Parse));                   
-                    
-                }
-
-                validInput= true;
+                Console.WriteLine("The file path is empty!");
             }
+
+            
         }
-        foreach(var element in resultValues)
+        foreach (var element in numberPairsList)
         {
             Console.WriteLine(element);
         }
