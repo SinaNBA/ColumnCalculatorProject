@@ -4,16 +4,16 @@ public class Program
 {
     static void Main(string[] args)
     {
-        Console.WriteLine("Please enter the file path and the desired operator, separated by a space. The format should be 'FileName Operator(+ - * / r (meaning round) and e (meaning exponent))'.");
-
         //D:\Projects\Peter's homeworks\8\Input1.csv
-        var filePathAndOperatorInput = Console.ReadLine();
 
-        bool validInput = false;
-        while (!validInput)
+        bool continueProgram = true;
+        while (continueProgram)
         {
             try
             {
+
+                Console.WriteLine("Please enter the file path and the desired operator, separated by a space. The format should be 'FileName Operator(+ - * / r (meaning round) and e (meaning exponent))'.");
+                var filePathAndOperatorInput = Console.ReadLine();
                 if (!string.IsNullOrEmpty(filePathAndOperatorInput))
                 {
                     string filePath, operatorInput;
@@ -88,8 +88,8 @@ public class Program
                                     Console.WriteLine(item);
                                 }
 
-
-                                validInput = true;
+                                Console.WriteLine("Press 'c' to continue or any other key to quit");
+                                continueProgram = Console.ReadLine().ToLower() == "c";
                             }
                             else
                             {
