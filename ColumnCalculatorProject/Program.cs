@@ -11,107 +11,13 @@ public class Program
         {
             try
             {
-
                 Console.WriteLine("Please enter the file path and the desired operator, separated by a space. The format should be 'FileName Operator(+ - * / r (meaning round) and e (meaning exponent))'.");
-                var filePathAndOperatorInput = Console.ReadLine();
-                if (!string.IsNullOrEmpty(filePathAndOperatorInput))
-                {
-                    string filePath, operatorInput;
-                    operatorInput = filePathAndOperatorInput.Substring(filePathAndOperatorInput.Length - 1, 1);
-                    filePath = filePathAndOperatorInput.Substring(0, filePathAndOperatorInput.Length - 2);
+                var filePathWithOperatorInput = Console.ReadLine();
 
-                    if (IsValidExtension(filePath))
-                    {
-                        if (IsValidOperator(operatorInput))
-                        {
-                            if (File.Exists(filePath))
-                            {
-                                StreamReader reader = new StreamReader(filePath);
-                                string? line;
-                                var pairs = new List<Tuple<int, int>>();
+                CalculateColumns(filePathWithOperatorInput);
 
-                                while ((line = reader.ReadLine()) != null)
-                                {
-                                    Console.WriteLine(line);
-                                    string[] values = line.Split(',');
-                                    if (int.TryParse(values[0], out int num1) && int.TryParse(values[1], out int num2))
-                                    {
-                                        pairs.Add(Tuple.Create(num1, num2));
-                                    }
-
-                                }
-
-                                var results = new List<int>();
-                                switch (operatorInput)
-                                {//"+", "-", "*", "/", "r", "e"
-                                    case "+":
-                                        foreach (var pair in pairs)
-                                        {
-                                            results.Add(pair.Item1 + pair.Item2);
-                                        }
-                                        break;
-                                    case "-":
-                                        foreach (var pair in pairs)
-                                        {
-                                            results.Add(pair.Item1 - pair.Item2);
-                                        }
-                                        break;
-                                    case "*":
-                                        foreach (var pair in pairs)
-                                        {
-                                            results.Add(pair.Item1 * pair.Item2);
-                                        }
-                                        break;
-                                    case "/":
-                                        foreach (var pair in pairs)
-                                        {
-                                            results.Add(pair.Item1 / pair.Item2);
-                                        }
-                                        break;
-                                    case "r":
-                                        foreach (var pair in pairs)
-                                        {
-                                            results.Add((int)Math.Round((double)pair.Item1 + pair.Item2));
-                                        }
-                                        break;
-                                    case "e":
-                                        foreach (var pair in pairs)
-                                        {
-                                            results.Add((int)Math.Pow(pair.Item1, pair.Item2));
-                                        }
-                                        break;
-
-                                }
-
-                                foreach (var item in results)
-                                {
-                                    Console.WriteLine(item);
-                                }
-
-                                Console.WriteLine("Press 'c' to continue or any other key to quit");
-                                continueProgram = Console.ReadLine().ToLower() == "c";
-                            }
-                            else
-                            {
-                                throw new ArgumentException("The file path does not exist.");
-                            }
-                        }
-                        else
-                        {
-                            throw new ArgumentOutOfRangeException("The operator is not valid!");
-                        }
-
-
-                    }
-                    else
-                    {
-                        throw new InvalidOperationException("The file path extension is not valid!");
-                    }
-                }
-                else
-                {
-                    throw new ArgumentException("The file path is empty!");
-                }
+                Console.WriteLine("Press 'c' to continue or any other key to quit");
+                continueProgram = Console.ReadLine().ToLower() == "c";
             }
             catch (ArgumentOutOfRangeException argOrEx)
             {
@@ -129,6 +35,108 @@ public class Program
         }
 
     }
+
+    public static List<int> CalculateColumns(string? filePathWithOperatorInput)
+    {
+        if (!string.IsNullOrEmpty(filePathWithOperatorInput))
+        {
+            string filePath, operatorInput;
+            operatorInput = filePathWithOperatorInput.Substring(filePathWithOperatorInput.Length - 1, 1);
+            filePath = filePathWithOperatorInput.Substring(0, filePathWithOperatorInput.Length - 2);
+
+            if (IsValidExtension(filePath))
+            {
+                if (IsValidOperator(operatorInput))
+                {
+                    if (File.Exists(filePath))
+                    {
+                        StreamReader reader = new StreamReader(filePath);
+                        string? line;
+                        var pairs = new List<Tuple<int, int>>();
+
+                        while ((line = reader.ReadLine()) != null)
+                        {
+                            Console.WriteLine(line);
+                            string[] values = line.Split(',');
+                            if (int.TryParse(values[0], out int num1) && int.TryParse(values[1], out int num2))
+                            {
+                                pairs.Add(Tuple.Create(num1, num2));
+                            }
+
+                        }
+
+                        var results = new List<int>();
+                        switch (operatorInput)
+                        {
+                            case "+":
+                                foreach (var pair in pairs)
+                                {
+                                    results.Add(pair.Item1 + pair.Item2);
+                                }
+                                break;
+                            case "-":
+                                foreach (var pair in pairs)
+                                {
+                                    results.Add(pair.Item1 - pair.Item2);
+                                }
+                                break;
+                            case "*":
+                                foreach (var pair in pairs)
+                                {
+                                    results.Add(pair.Item1 * pair.Item2);
+                                }
+                                break;
+                            case "/":
+                                foreach (var pair in pairs)
+                                {
+                                    results.Add(pair.Item1 / pair.Item2);
+                                }
+                                break;
+                            case "r":
+                                foreach (var pair in pairs)
+                                {
+                                    results.Add((int)Math.Round((double)pair.Item1 + pair.Item2));
+                                }
+                                break;
+                            case "e":
+                                foreach (var pair in pairs)
+                                {
+                                    results.Add((int)Math.Pow(pair.Item1, pair.Item2));
+                                }
+                                break;
+
+                        }
+
+                        foreach (var item in results)
+                        {
+                            Console.WriteLine(item);
+                        }
+
+                        return results;
+                    }
+                    else
+                    {
+                        throw new ArgumentException("The file path does not exist.");
+                    }
+                }
+                else
+                {
+                    throw new ArgumentOutOfRangeException("The operator is not valid!");
+                }
+
+
+            }
+            else
+            {
+                throw new InvalidOperationException("The file path extension is not valid!");
+            }
+        }
+        else
+        {
+            throw new ArgumentException("The file path is empty!");
+        }
+    }
+
     public static bool IsValidExtension(string filePathExtension)
     {
         string[] validExtentions = [".txt", ".csv"];
@@ -154,10 +162,5 @@ public class Program
             }
         }
         return false;
-    }
-
-    public static List<List<int>> FilterOutNonNumericValues(List<List<int>> values)
-    {
-        throw new NotImplementedException();
     }
 }
