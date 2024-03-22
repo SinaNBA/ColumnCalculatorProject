@@ -4,8 +4,6 @@ public class Program
 {
     static void Main(string[] args)
     {
-        //D:\Projects\Peter's homeworks\8\Input1.csv
-
         bool continueProgram = true;
         while (continueProgram)
         {
@@ -36,7 +34,7 @@ public class Program
 
     }
 
-    public static List<int> CalculateColumns(string? filePathWithOperatorInput)
+    public static List<double> CalculateColumns(string? filePathWithOperatorInput)
     {
         if (!string.IsNullOrEmpty(filePathWithOperatorInput))
         {
@@ -65,7 +63,7 @@ public class Program
 
                         }
 
-                        var results = new List<int>();
+                        var results = new List<double>();
                         switch (operatorInput)
                         {
                             case "+":
@@ -95,13 +93,13 @@ public class Program
                             case "r":
                                 foreach (var pair in pairs)
                                 {
-                                    results.Add((int)Math.Round((double)pair.Item1 + pair.Item2));
+                                    results.Add(Math.Round((double)pair.Item1 + pair.Item2));
                                 }
                                 break;
                             case "e":
                                 foreach (var pair in pairs)
                                 {
-                                    results.Add((int)Math.Pow(pair.Item1, pair.Item2));
+                                    results.Add(Math.Pow(pair.Item1, pair.Item2));
                                 }
                                 break;
 
@@ -111,7 +109,7 @@ public class Program
                         {
                             Console.WriteLine(item);
                         }
-
+                        
                         return results;
                     }
                     else
@@ -153,10 +151,10 @@ public class Program
 
     public static bool IsValidOperator(string operatorInput)
     {
-        string[] validExtentions = ["+", "-", "*", "/", "r", "e"];
+        string[] validOperators = ["+", "-", "*", "/", "r", "e"];
         if (!string.IsNullOrEmpty(operatorInput))
         {
-            foreach (string opt in validExtentions)
+            foreach (string opt in validOperators)
             {
                 if (operatorInput.ToLower().Equals(opt)) { return true; }
             }
