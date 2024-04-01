@@ -105,11 +105,8 @@ public class Program
 
                         }
 
-                        foreach (var item in results)
-                        {
-                            Console.WriteLine(item);
-                        }
-                        
+                        PrintAndWriteOutputDataToFile(results, filePath);
+
                         return results;
                     }
                     else
@@ -160,5 +157,19 @@ public class Program
             }
         }
         return false;
+    }
+
+    public static void PrintAndWriteOutputDataToFile(List<double> results, string filePath)
+    {
+        string outputFilePath = Directory.GetParent(filePath).ToString() + @"\TestOutput.txt";
+        string resultsString = "";
+
+        foreach (var item in results)
+        {
+            Console.WriteLine(item);
+            resultsString += item.ToString() + Environment.NewLine;
+        }
+
+        File.WriteAllText(outputFilePath, resultsString);
     }
 }
