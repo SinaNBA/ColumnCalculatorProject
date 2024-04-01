@@ -9,7 +9,7 @@ public class Program
         {
             try
             {
-                Console.WriteLine("Please enter the file path and the desired operator, separated by a space. The format should be 'FileName Operator(+ - * / r (meaning round) and e (meaning exponent))'.");
+                Console.WriteLine("Please enter the file path(relative or absolute path) and the desired operator, separated by a space. The format should be 'FileName Operator(+ - * / r (meaning round) and e (meaning exponent))'.");
                 var filePathWithOperatorInput = Console.ReadLine();
 
                 CalculateColumns(filePathWithOperatorInput);
